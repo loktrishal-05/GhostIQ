@@ -1,0 +1,530 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Fonts ── */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque[opsz,wdth,wght].woff2")
+    format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sora";
+  src: url("/assets/fonts/Sora[wght].woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/GeistMono[wght].woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+
+    /* GhostIQ Dark Theme — spectral void-black + violet + cyan */
+    --background: 0.1 0 0;
+    --foreground: 0.96 0.01 280;
+
+    --card: 0.14 0.005 280;
+    --card-foreground: 0.96 0.01 280;
+
+    --popover: 0.16 0.008 280;
+    --popover-foreground: 0.96 0.01 280;
+
+    /* Spectral violet primary */
+    --primary: 0.62 0.22 290;
+    --primary-foreground: 0.98 0 0;
+
+    --secondary: 0.18 0.01 280;
+    --secondary-foreground: 0.85 0.02 280;
+
+    --muted: 0.17 0.008 280;
+    --muted-foreground: 0.55 0.04 280;
+
+    /* Cyan accent */
+    --accent: 0.72 0.15 195;
+    --accent-foreground: 0.08 0 0;
+
+    --destructive: 0.62 0.22 27;
+    --destructive-foreground: 0.98 0 0;
+
+    --border: 0.22 0.02 280;
+    --input: 0.2 0.015 280;
+    --ring: 0.62 0.22 290;
+
+    /* Risk colors */
+    --risk-low: 0.72 0.17 195;
+    --risk-medium: 0.72 0.18 55;
+    --risk-high: 0.65 0.25 27;
+
+    /* Chart colors */
+    --chart-1: 0.62 0.22 290;
+    --chart-2: 0.72 0.15 195;
+    --chart-3: 0.72 0.18 55;
+    --chart-4: 0.65 0.25 27;
+    --chart-5: 0.58 0.2 320;
+
+    /* Sidebar */
+    --sidebar: 0.12 0.006 280;
+    --sidebar-foreground: 0.9 0.01 280;
+    --sidebar-primary: 0.62 0.22 290;
+    --sidebar-primary-foreground: 0.98 0 0;
+    --sidebar-accent: 0.18 0.01 280;
+    --sidebar-accent-foreground: 0.85 0.02 280;
+    --sidebar-border: 0.2 0.015 280;
+    --sidebar-ring: 0.62 0.22 290;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Sora", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Bricolage Grotesque", sans-serif;
+  }
+}
+
+@layer utilities {
+  /* Ghost float animation */
+  @keyframes ghost-float {
+    0%,
+    100% {
+      transform: translateY(0px) rotate(-2deg);
+    }
+    50% {
+      transform: translateY(-16px) rotate(2deg);
+    }
+  }
+
+  @keyframes ghost-shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    10% {
+      transform: translateX(-8px) rotate(-3deg);
+    }
+    20% {
+      transform: translateX(8px) rotate(3deg);
+    }
+    30% {
+      transform: translateX(-6px) rotate(-2deg);
+    }
+    40% {
+      transform: translateX(6px) rotate(2deg);
+    }
+    50% {
+      transform: translateX(-4px);
+    }
+    60% {
+      transform: translateX(4px);
+    }
+    70% {
+      transform: translateX(-2px);
+    }
+    80% {
+      transform: translateX(2px);
+    }
+    90% {
+      transform: translateX(-1px);
+    }
+  }
+
+  @keyframes ghost-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.08);
+      opacity: 0.85;
+    }
+  }
+
+  @keyframes card-shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    15% {
+      transform: translateX(-5px);
+    }
+    30% {
+      transform: translateX(5px);
+    }
+    45% {
+      transform: translateX(-3px);
+    }
+    60% {
+      transform: translateX(3px);
+    }
+    75% {
+      transform: translateX(-1px);
+    }
+    90% {
+      transform: translateX(1px);
+    }
+  }
+
+  @keyframes confetti-fall {
+    0% {
+      transform: translateY(-20px) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(60px) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 20px oklch(0.65 0.25 27 / 0.4), 0 0 60px
+        oklch(0.65 0.25 27 / 0.2);
+    }
+    50% {
+      box-shadow: 0 0 40px oklch(0.65 0.25 27 / 0.7), 0 0 80px
+        oklch(0.65 0.25 27 / 0.4);
+    }
+  }
+
+  @keyframes violet-glow-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 20px oklch(0.62 0.22 290 / 0.3), 0 0 40px
+        oklch(0.62 0.22 290 / 0.1);
+    }
+    50% {
+      box-shadow: 0 0 35px oklch(0.62 0.22 290 / 0.5), 0 0 70px
+        oklch(0.62 0.22 290 / 0.2);
+    }
+  }
+
+  @keyframes count-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes score-ring {
+    from {
+      stroke-dashoffset: 251;
+    }
+  }
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  .animate-ghost-float {
+    animation: ghost-float 3s ease-in-out infinite;
+  }
+
+  .animate-ghost-shake {
+    animation: ghost-shake 0.6s ease-in-out infinite;
+  }
+
+  .animate-ghost-pulse {
+    animation: ghost-pulse 2s ease-in-out infinite;
+  }
+
+  .animate-card-shake {
+    animation: card-shake 0.5s ease-in-out 3;
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out 5;
+  }
+
+  .animate-violet-glow {
+    animation: violet-glow-pulse 2.5s ease-in-out infinite;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out forwards;
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 4s ease infinite;
+  }
+
+  .text-gradient-violet {
+    background: linear-gradient(
+      135deg,
+      oklch(0.62 0.22 290),
+      oklch(0.72 0.15 195)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-ghost {
+    background: linear-gradient(
+      135deg,
+      oklch(0.85 0.05 280),
+      oklch(0.62 0.22 290),
+      oklch(0.72 0.15 195)
+    );
+    background-size: 200% auto;
+    animation: shimmer 4s linear infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .ghost-noise-bg {
+    background-image: radial-gradient(
+        ellipse at 20% 20%,
+        oklch(0.62 0.22 290 / 0.08) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse at 80% 80%,
+        oklch(0.72 0.15 195 / 0.06) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse at 60% 20%,
+        oklch(0.65 0.25 27 / 0.04) 0%,
+        transparent 40%
+      );
+  }
+
+  .sidebar-glow {
+    box-shadow: 1px 0 0 oklch(0.22 0.02 280), 4px 0 20px
+      oklch(0.62 0.22 290 / 0.05);
+  }
+
+  .card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px oklch(0.62 0.22 290 / 0.15);
+  }
+
+  @keyframes gradient-pulse {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes wave-move {
+    0% {
+      transform: translateX(-50%) translateY(0);
+    }
+    50% {
+      transform: translateX(-50%) translateY(-10px);
+    }
+    100% {
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
+  @keyframes flicker {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    33% {
+      opacity: 0.92;
+    }
+    66% {
+      opacity: 0.96;
+    }
+  }
+
+  @keyframes particle-float {
+    0% {
+      transform: translateY(100%) translateX(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.6;
+    }
+    90% {
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateY(-20%) translateX(20px);
+      opacity: 0;
+    }
+  }
+
+  .animate-gradient-pulse {
+    background-size: 300% 300%;
+    animation: gradient-pulse 6s ease infinite;
+  }
+
+  .animate-flicker {
+    animation: flicker 4s ease-in-out 6;
+  }
+
+  /* Hero ghost float — smooth cinematic drift */
+  @keyframes hero-ghost-float {
+    0% {
+      transform: translateY(0px) translateX(0px) rotate(0deg);
+    }
+    25% {
+      transform: translateY(-18px) translateX(6px) rotate(3deg);
+    }
+    50% {
+      transform: translateY(-24px) translateX(0px) rotate(0deg);
+    }
+    75% {
+      transform: translateY(-10px) translateX(-6px) rotate(-3deg);
+    }
+    100% {
+      transform: translateY(0px) translateX(0px) rotate(0deg);
+    }
+  }
+
+  /* Animated background gradient shift */
+  @keyframes landing-bg-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Particle fade-float */
+  @keyframes particle-rise {
+    0% {
+      transform: translateY(0) translateX(0);
+      opacity: 0;
+    }
+    15% {
+      opacity: 0.5;
+    }
+    85% {
+      opacity: 0.2;
+    }
+    100% {
+      transform: translateY(-120px) translateX(20px);
+      opacity: 0;
+    }
+  }
+
+  .animate-hero-ghost-float {
+    animation: hero-ghost-float 5s ease-in-out infinite;
+  }
+
+  .animate-landing-bg {
+    background-size: 300% 300%;
+    animation: landing-bg-shift 8s ease infinite;
+  }
+
+  /* Advisor chat dot bounce */
+  @keyframes advisor-dot-bounce {
+    0%,
+    60%,
+    100% {
+      transform: translateY(0);
+    }
+    30% {
+      transform: translateY(-5px);
+    }
+  }
+
+  /* Advisor unseen pulse */
+  @keyframes advisor-dot-pulse {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(1.2);
+    }
+  }
+
+  /* Custom scrollbar for advisor chat */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+  }
+  .scrollbar-track-transparent::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thumb-white\/10::-webkit-scrollbar-thumb {
+    background: oklch(1 0 0 / 0.1);
+    border-radius: 2px;
+  }
+  .scrollbar-thumb-white\/10::-webkit-scrollbar-thumb:hover {
+    background: oklch(1 0 0 / 0.2);
+  }
+}
